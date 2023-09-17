@@ -9,15 +9,15 @@
 </head>
 
 <body>
-<img src="./images/head.png" id="headpage">
-<h1 class="game-title">Jogo da Memória</h1>
+
+<img src="./images/LogoEnviroMemory.png" id="logomain">
 
 <?php
 session_start();
 
 function generateResetButton() {
     echo '
-    <div style="text-align: center;padding:2em">
+    <div class="select" style="text-align: center;padding:2em">
         <form method="POST">
             <input type="hidden" name="acao" value="reset" />
             <input type="submit" value="Reset" style="font-size: 1.8em; background-color:red; color: white;" />
@@ -27,7 +27,7 @@ function generateResetButton() {
 
 function generateStartButton() {
     echo '
-    <div style="text-align: center;padding:2em">
+    <div class="select" style="text-align: center;padding:2em">
         <form method="POST">
             <input type="hidden" name="acao" value="start" />
             <input type="submit" value="Start" style="font-size: 1.8em; background-color:green; color: white;" />
@@ -117,5 +117,5 @@ if (isset($_SESSION['tabResultado'])) {
 ?>
 
 </body>
-
+<img src="./images/foot.png" id="foot">
 </html>

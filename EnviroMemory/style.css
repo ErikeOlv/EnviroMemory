@@ -33,6 +33,22 @@ h1, h2, h3, p, ul, ol, dl, form {
     left: 0;
     width: 100%;
 }
+#headpage{
+  width: 150px;
+  position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+#logomain{
+  width: 250px;
+  position: fixed;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+}
 
 
 .button{
@@ -64,35 +80,48 @@ h1, h2, h3, p, ul, ol, dl, form {
     padding: 15px;
 
 }
+.select{
+  position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 /* Configuração básica da tabela */
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 20%;
     margin-left: auto;
     margin-right: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-  
+
+
   /* Estilo das imagens nas células da tabela */
   .table img {
-    width: 160px;
+    width: 80px;
     display: block;
-    margin: 0 auto; /* Centraliza as imagens horizontalmente */
+    margin: 0; /* Centraliza as imagens horizontalmente */
+    padding: 0;
   }
   
   /* Estilização do contêiner do tabuleiro */
   .tabuleiro-container {
-    width: 100%;
+    width: 40%;
     text-align: center; /* Centraliza o conteúdo horizontalmente */
   }
   
   /* Estilo das células da tabela */
-  table td,
-  table th {
-    border: 1px solid black;
+  table td, table th {
+    border: 0px solid black;
     padding: 5px; /* Adiciona algum espaço interno para melhor aparência */
+    margin: 0;
+
   }
-  
+
   /* Remoção de bordas desnecessárias */
   table tr:first-child th {
     border-top: 0;
