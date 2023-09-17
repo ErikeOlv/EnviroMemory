@@ -1,0 +1,113 @@
+/* Estilos padrão */
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(./images/bg2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: rgb(142,193,108);
+}
+h1, h2, h3, p, ul, ol, dl, form {
+    margin: 0;
+    padding: 0;
+  }
+
+.ini_buttons{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ini_buttons img{
+    width: 250px;
+}
+
+#foot {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+.button{
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
+    bottom:250px;
+    width: 250px;
+    padding: 10px;
+    background-color: #79b511;
+    border-radius: 50px;
+    width: 250px;
+    margin: auto;
+   
+}
+
+.button a{
+    text-decoration: none;
+}
+
+.button:hover{
+    background-color: #598015;
+
+}
+
+.button p{
+    text-align: center;
+    color: #dbe366;
+    font-size: 30px;
+    margin: 0;
+    padding: 15px;
+
+}
+
+/* Configuração básica da tabela */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Estilo das imagens nas células da tabela */
+  .table img {
+    width: 160px;
+    display: block;
+    margin: 0 auto; /* Centraliza as imagens horizontalmente */
+  }
+  
+  /* Estilização do contêiner do tabuleiro */
+  .tabuleiro-container {
+    width: 100%;
+    text-align: center; /* Centraliza o conteúdo horizontalmente */
+  }
+  
+  /* Estilo das células da tabela */
+  table td,
+  table th {
+    border: 1px solid black;
+    padding: 5px; /* Adiciona algum espaço interno para melhor aparência */
+  }
+  
+  /* Remoção de bordas desnecessárias */
+  table tr:first-child th {
+    border-top: 0;
+  }
+  
+  table tr:last-child td {
+    border-bottom: 0;
+  }
+  
+  table tr td:first-child,
+  table tr th:first-child {
+    border-left: 0;
+  }
+  
+  table tr td:last-child,
+  table tr th:last-child {
+    border-right: 0;
+  }
