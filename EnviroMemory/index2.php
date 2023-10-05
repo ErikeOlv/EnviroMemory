@@ -23,9 +23,7 @@
     *                                                     *
     *******************************************************/
 session_start();
-header("Cache-Control: no-cache, must-revalidate");
 $array_itenstotal = ["im01","im02","im03","im04","im05","im06","im07","im08","im09","im10","im11","im12","im13","im14","im15","im16","im17","im18"];
-
 
 function leveltabuleirof($l, $c, $sel, $nomeTabuleiro){
 
@@ -76,14 +74,14 @@ $tabuleiro2 = leveltabuleirof(4, 5, 10, 'tabuleiro2');
 $tabuleiro3 = leveltabuleirof(6, 6, 18, 'tabuleiro3');
 
 $tabuleiros = [$tabuleiro1, $tabuleiro2, $tabuleiro3];
-
+var_dump($tabuleiro2);
 ?>
 
 <?php
 session_start();
+header("Cache-Control: no-cache, must-revalidate");
     //Declarações de Funções a serem utilizadas
-    function ResetButton()
-    {
+    function ResetButton() {
         echo '
         <div class="select">
             <form method="POST">
@@ -92,9 +90,8 @@ session_start();
             </form>
         </div>';
     }
-
-    function StartButton()
-    {
+    
+    function StartButton() {
         echo '
         <div class="select">
             <form method="POST">
@@ -103,9 +100,17 @@ session_start();
             </form>
         </div>';
     }
-
-    function NextPhase()
-    {
+    
+    function PreviousPhase(){
+        echo '
+        <div class="select3">
+            <form method="POST">
+                <input type="hidden" name="acao" value="prev"/>
+                <input type="submit" value="Anterior"/>
+            </form>
+        </div>'; 
+    }
+    function NextPhase(){
         echo '
         <div class="select2">
             <form method="POST">
@@ -114,6 +119,7 @@ session_start();
             </form>
         </div>';
     }
+    
 
     /******************************************************
      *                                                    *
@@ -123,13 +129,21 @@ session_start();
      *                                                    *
     ******************************************************/
 
+    if (isset($_POST['acao']) && $_POST['acao'] == "prev") {
+        session_destroy();
+        session_start();
+        unset($_GET['l']);
+        unset($_GET['c']);
+        header("Location: index.php");
+    }
+
     if (isset($_POST['acao']) && $_POST['acao'] == "reset")
     {
         session_destroy();
         session_start();
         unset($_GET['l']);
         unset($_GET['c']);
-        header("Location: index.php");
+        header("Location: index2.php");
     }
 
     if (isset($_POST['acao']) && $_POST['acao'] == "next")
@@ -138,7 +152,7 @@ session_start();
         session_start();
         unset($_GET['l']);
         unset($_GET['c']);
-        header("Location: index2.php");
+        header("Location: index3.php");
     }
 
 
@@ -167,13 +181,13 @@ session_start();
     }
     if (!isset($_SESSION['tabResultado']))
     {
-        $tabEscolhido = 0;
+        $tabEscolhido = 1;
         $_SESSION['tabEscolhido'] = $tabEscolhido;
         $_SESSION['tabResultado'] = [
-            [false, false, false, false],
-            [false, false, false, false],
-            [false, false, false, false],
-            [false, false, false, false]
+            [false, false, false, false, false],
+            [false, false, false, false, false],
+            [false, false, false, false, false],
+            [false, false, false, false, false]
         ];
     }
 
@@ -186,6 +200,49 @@ session_start();
      *                                                      *
     ********************************************************/
 
+    //Geração do Tabuleiro do jogo, onde estarão as cartas
+    if (isset($_SESSION['tabResultado']))
+    {
+        echo '<div class="tabuleiro-container">';
+        echo '<table class="table">';
+            for ($l = 0; $l < 4; $l++)
+            {
+                echo '<tr>';
+                    for ($c = 0; $c <5; $c++)
+                    {
+                        if (isset($_GET["l"]) && isset($_GET["c"]) && $_GET['l'] == $l && $_GET['c'] == $c)
+                        {
+                            echo '<td>';
+                            echo '<a href="?l=' . $l . '&c=' . $c . '">';
+                            echo '<img src="images/' . $tabuleiros[$_SESSION['tabEscolhido']][$l][$c] . '.png">';
+                            echo '</a>';
+                            echo '</td>';
+                        }
+                        elseif ($_SESSION['numero_jogadas'] >= 1 && isset($_SESSION['valorLinha']) && isset($_SESSION['valorColuna']) && ($_SESSION['valorLinha'] == $l && $_SESSION['valorColuna'] == $c))
+                        {
+                            echo '<td>';
+                            echo '<a href="?l=' . $_SESSION['valorLinha'] . '&c=' . $_SESSION['valorColuna'] . '">';
+                            echo '<img src="images/' . $tabuleiros[$_SESSION['tabEscolhido']][$_SESSION['valorLinha']][$_SESSION['valorColuna']] . '.png">';
+                            echo '</a>';
+                            echo '</td>';
+                        }
+                        elseif (isset($_SESSION['tabResultado']) && $_SESSION['tabResultado'][$l][$c] == true)
+                        {
+                            echo '<td>';
+                            echo '<img src="images/' . $tabuleiros[$_SESSION['tabEscolhido']][$l][$c] . '.png">';
+                            echo '</td>';
+                        } 
+                        else
+                        {
+                            echo '<td><a href="?l=' . $l . '&c=' . $c . '">';
+                            echo '<img src="images/Carta.png">';
+                            echo '</a></td>';
+                        }
+                    }
+                echo '</tr>';
+            }
+        echo '</table>';
+        echo '</div>';
 
 
     if (!isset($_SESSION['numero_jogadas']) || $_SESSION['numero_jogadas'] >= 2)
@@ -232,52 +289,7 @@ session_start();
         }
 
     }
-
-    //Geração do Tabuleiro do jogo, onde estarão as cartas
-    if (isset($_SESSION['tabResultado']))
-    {
-        echo '<div class="tabuleiro-container">';
-        echo '<table class="table">';
-            for ($l = 0; $l < 4; $l++)
-            {
-                echo '<tr>';
-                    for ($c = 0; $c <4; $c++)
-                    {
-                        if (isset($_GET["l"]) && isset($_GET["c"]) && $_GET['l'] == $l && $_GET['c'] == $c)
-                        {
-                            echo '<td>';
-                            echo '<a href="?l=' . $l . '&c=' . $c . '">';
-                            echo '<img src="images/' . $tabuleiros[$_SESSION['tabEscolhido']][$l][$c] . '.png">';
-                            echo '</a>';
-                            echo '</td>';
-                        }
-                        elseif ($_SESSION['numero_jogadas'] >= 1 && isset($_SESSION['valorLinha']) && isset($_SESSION['valorColuna']) && ($_SESSION['valorLinha'] == $l && $_SESSION['valorColuna'] == $c))
-                        {
-                            echo '<td>';
-                            echo '<a href="?l=' . $_SESSION['valorLinha'] . '&c=' . $_SESSION['valorColuna'] . '">';
-                            echo '<img src="images/' . $tabuleiros[$_SESSION['tabEscolhido']][$_SESSION['valorLinha']][$_SESSION['valorColuna']] . '.png">';
-                            echo '</a>';
-                            echo '</td>';
-                        }
-                        elseif (isset($_SESSION['tabResultado']) && $_SESSION['tabResultado'][$l][$c] == true)
-                        {
-                            echo '<td>';
-                            echo '<img src="images/' . $tabuleiros[$_SESSION['tabEscolhido']][$l][$c] . '.png">';
-                            echo '</td>';
-                        } 
-                        else
-                        {
-                            echo '<td><a href="?l=' . $l . '&c=' . $c . '">';
-                            echo '<img src="images/Carta.png">';
-                            echo '</a></td>';
-                        }
-                    }
-                echo '</tr>';
-            }
-        echo '</table>';
-        echo '</div>';
-
-
+    PreviousPhase();
     ResetButton();
     NextPhase();
     }
